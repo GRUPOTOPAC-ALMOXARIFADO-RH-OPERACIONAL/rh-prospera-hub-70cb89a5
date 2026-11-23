@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const FALLBACK_SUPABASE_URL = 'https://djfjnxmbvjgweqzjvqtr.supabase.co';
-const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_DHu9U7RSOV8uPwW2XXtH8A_ek7QfU_Z';
+const FALLBACK_SUPABASE_URL = 'https://zlzydfdcirdbfbyaiyzk.supabase.co';
+const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_0YSt4eG2GhBcehLoDIsPaQ_Xv-dWYWU';
 const MAX_VERCEL_MULTIPART_FILE_BYTES = 4_000_000;
 const MAX_RAW_BODY_BYTES = 4_350_000;
 const BUCKET = 'documentos-ativos';

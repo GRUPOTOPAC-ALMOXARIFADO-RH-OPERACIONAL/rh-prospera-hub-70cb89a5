@@ -11,10 +11,12 @@ const allowedPhoto = (raw: unknown) => {
   try {
     const u = new URL(String(raw || ""));
     return u.protocol === "https:"
-      && u.hostname === "djfjnxmbvjgweqzjvqtr.supabase.co"
+      && u.hostname === "zlzydfdcirdbfbyaiyzk.supabase.co"
       && (
         u.pathname.startsWith("/storage/v1/object/public/abastecimento-fotos/")
         || u.pathname.startsWith("/storage/v1/object/public/ponto-veiculo/")
+        || u.pathname.startsWith("/storage/v1/object/sign/abastecimento-fotos/")
+        || u.pathname.startsWith("/storage/v1/object/sign/ponto-veiculo/")
       );
   } catch { return false; }
 };

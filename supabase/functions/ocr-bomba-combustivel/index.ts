@@ -202,7 +202,7 @@ async function callLovable(apiKey: string, image: string, prompt: string, isPane
 }
 
 async function callVercelFallback(source: string, tipo: string) {
-  if (!source.startsWith("https://djfjnxmbvjgweqzjvqtr.supabase.co/storage/v1/object/public/")) return null;
+  if (!/^https:\/\/zlzydfdcirdbfbyaiyzk\.supabase\.co\/storage\/v1\/object\/(public|sign)\//.test(source)) return null;
   try {
     const response = await fetch(VERCEL_OCR_FALLBACK, {
       method: "POST",

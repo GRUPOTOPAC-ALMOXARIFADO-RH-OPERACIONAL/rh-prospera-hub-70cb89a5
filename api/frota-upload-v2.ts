@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const FALLBACK_SUPABASE_URL = 'https://djfjnxmbvjgweqzjvqtr.supabase.co';
-const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_DHu9U7RSOV8uPwW2XXtH8A_ek7QfU_Z';
+const FALLBACK_SUPABASE_URL = 'https://zlzydfdcirdbfbyaiyzk.supabase.co';
+const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_0YSt4eG2GhBcehLoDIsPaQ_Xv-dWYWU';
 const BUCKET = 'documentos-ativos';
 const MAX_FILE_BYTES = 4_000_000;
 const MAX_REQUEST_BYTES = 4_400_000;
@@ -75,7 +75,7 @@ export const parseMultipartBody = (body: Buffer, contentTypeHeader: string): Mul
     const filename = disposition.match(/filename="([^"]*)"/i)?.[1] || undefined;
     const contentType = headerText.match(/content-type:\s*([^\r\n]+)/i)?.[1]?.trim();
     if (name) parts.push({ name, filename, contentType, data: body.slice(headerEnd + separator.length, dataEnd) });
-    cursor = nextBoundary + marker.length;
+    cursor = nextBoundary;
   }
   return parts;
 };

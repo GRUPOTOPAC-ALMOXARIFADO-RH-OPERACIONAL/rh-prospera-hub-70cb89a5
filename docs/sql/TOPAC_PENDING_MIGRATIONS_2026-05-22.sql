@@ -1,9 +1,9 @@
 -- TOPAC RH PRO - SQL CONSOLIDADO DE RESGATE DO BANCO
 -- Data: 2026-05-22
--- Banco oficial alvo: https://djfjnxmbvjgweqzjvqtr.supabase.co
+-- Banco oficial alvo: https://zlzydfdcirdbfbyaiyzk.supabase.co
 -- Ultima revisao: forcar deploy Vercel apos fallback Supabase.
 --
--- Cole este arquivo inteiro no Supabase SQL Editor do projeto djfjnxmbvjgweqzjvqtr.
+-- Cole este arquivo inteiro no Supabase SQL Editor do projeto zlzydfdcirdbfbyaiyzk.
 -- Objetivo: aplicar migrations pendentes sem criar telas novas.
 -- Este script e idempotente na maior parte: usa IF NOT EXISTS, DROP POLICY IF EXISTS
 -- e ON CONFLICT para evitar duplicidades.

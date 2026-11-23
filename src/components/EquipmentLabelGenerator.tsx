@@ -14,7 +14,7 @@ import {
 
 const DPI = 300;
 const MM_TO_PX = DPI / 25.4;
-const STORAGE_BASE = 'https://djfjnxmbvjgweqzjvqtr.supabase.co/storage/v1/object/public/etiquetas-artes/fixed';
+const STORAGE_BASE = 'https://zlzydfdcirdbfbyaiyzk.supabase.co/storage/v1/object/public/etiquetas-artes/fixed';
 const SOURCE_CELL_WIDTH = 450;
 const SOURCE_CELL_HEIGHT = 620;
 
@@ -42,6 +42,17 @@ const posterPosition = (id: string) => {
 };
 
 const rowUrl = (row: number) => `${STORAGE_BASE}/posters-row-${row}.webp`;
+
+// O bucket etiquetas-artes é privado: gera URL assinada (cai na URL pública só como último recurso).
+const signedRowUrl = async (row: number) => {
+  try {
+    const { data } = await supabase.storage
+      .from('etiquetas-artes')
+      .createSignedUrl(`fixed/posters-row-${row}.webp`, 60 * 30);
+    if (data?.signedUrl) return data.signedUrl;
+  } catch { /* usa fallback */ }
+  return rowUrl(row);
+};
 
 const loadImage = (src: string, bustCache = false) => {
   const effectiveSrc = bustCache ? `${src}?v=${Date.now()}` : src;
@@ -174,7 +185,7 @@ const renderFixedLabel = async (
   ctx.imageSmoothingQuality = 'high';
 
   const { row, col } = posterPosition(item.id);
-  const src = rowUrl(row);
+  const src = await signedRowUrl(row);
   let rowImage: HTMLImageElement;
 
   try {

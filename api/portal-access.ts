@@ -27,7 +27,7 @@ const normalizeEmail = (value: unknown) => String(value || '').trim().toLowerCas
 const cleanText = (value: unknown, max = 180) => String(value || '').replace(/[<>\r\n]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
 
 const getServer = () => {
-  const url = env('SUPABASE_URL') || env('VITE_SUPABASE_URL') || 'https://djfjnxmbvjgweqzjvqtr.supabase.co';
+  const url = env('SUPABASE_URL') || env('VITE_SUPABASE_URL') || 'https://zlzydfdcirdbfbyaiyzk.supabase.co';
   const key = env('SUPABASE_SERVICE_ROLE_KEY');
   if (!url || !key) return null;
   return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });

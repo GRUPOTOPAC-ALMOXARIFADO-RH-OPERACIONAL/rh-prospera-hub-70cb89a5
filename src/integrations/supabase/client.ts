@@ -3,8 +3,8 @@ import type { Database } from './types';
 import { brokeredPreviewStorage } from './previewAuthStorage';
 import { mechanicSessionFetch } from '@/app-mecanico/lib/secureSession';
 
-const FALLBACK_SUPABASE_URL = 'https://djfjnxmbvjgweqzjvqtr.supabase.co';
-const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_DHu9U7RSOV8uPwW2XXtH8A_ek7QfU_Z';
+const FALLBACK_SUPABASE_URL = 'https://zlzydfdcirdbfbyaiyzk.supabase.co';
+const FALLBACK_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_0YSt4eG2GhBcehLoDIsPaQ_Xv-dWYWU';
 
 // O portal da equipe e a area administrativa compartilham O MESMO inventario.
 // O antigo VITE_SUPABASE_URL no ambiente de build apontava para outro projeto,

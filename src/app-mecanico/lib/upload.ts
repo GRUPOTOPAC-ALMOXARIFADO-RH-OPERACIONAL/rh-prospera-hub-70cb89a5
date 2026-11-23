@@ -78,12 +78,6 @@ export async function uploadFoto(
       });
       if (error) throw error;
 
-      if (bucket === "abastecimento-fotos") {
-        const { data } = supabase.storage.from(bucket).getPublicUrl(path);
-        if (!data?.publicUrl) throw new Error("URL pública não retornada pelo storage.");
-        return data.publicUrl;
-      }
-
       const { data: signed, error: signedError } = await supabase.storage
         .from(bucket)
         .createSignedUrl(path, 60 * 60 * 24 * 365 * 5);

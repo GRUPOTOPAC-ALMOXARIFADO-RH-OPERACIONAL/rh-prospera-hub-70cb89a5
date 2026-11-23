@@ -2,10 +2,12 @@ import { createWorker } from 'tesseract.js';
 import { getVercelOidcToken } from '@vercel/oidc';
 
 const MODEL = 'google/gemini-2.5-flash';
-const ALLOWED_HOST = 'djfjnxmbvjgweqzjvqtr.supabase.co';
+const ALLOWED_HOST = 'zlzydfdcirdbfbyaiyzk.supabase.co';
 const ALLOWED_PATHS = [
   '/storage/v1/object/public/abastecimento-fotos/',
   '/storage/v1/object/public/ponto-veiculo/',
+  '/storage/v1/object/sign/abastecimento-fotos/',
+  '/storage/v1/object/sign/ponto-veiculo/',
 ] as const;
 
 const send = (res: any, body: unknown, status = 200) =>

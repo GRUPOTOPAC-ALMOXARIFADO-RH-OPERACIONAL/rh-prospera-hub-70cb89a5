@@ -49,7 +49,7 @@ export default async function handler(req: any, res?: any) {
   }
 
   // Mesmo Supabase do Estoque Interno e do cliente publicado; evitar env legada de outro projeto.
-  const supabaseUrl = 'https://djfjnxmbvjgweqzjvqtr.supabase.co';
+  const supabaseUrl = 'https://zlzydfdcirdbfbyaiyzk.supabase.co';
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {

@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Archive, Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { openDocumentInNewTab } from '@/lib/documentUrl';
+import { toast } from 'sonner';
 
 type HistoricoDocumento = {
   id: string;
@@ -116,10 +118,13 @@ const FrotaHistoricoDocumentos: React.FC<Props> = ({ busca = '' }) => {
                 Arquivado em {row.arquivado_em ? new Date(row.arquivado_em).toLocaleString('pt-BR') : '—'}
               </div>
               {row.documento_url && (
-                <a className="mt-2 inline-block text-xs font-semibold text-primary underline"
-                   href={row.documento_url} target="_blank" rel="noreferrer">
+                <button type="button" className="mt-2 inline-block text-xs font-semibold text-primary underline"
+                   onClick={async () => {
+                     const ok = await openDocumentInNewTab({ url: row.documento_url, tipo: 'veiculo' });
+                     if (!ok) toast.error('Não foi possível abrir o documento anterior. Verifique sua permissão de acesso.');
+                   }}>
                   Abrir documento anterior
-                </a>
+                </button>
               )}
             </div>
           ))}
