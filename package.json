@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:pages": "vite build && node scripts/build-pages-worker.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
