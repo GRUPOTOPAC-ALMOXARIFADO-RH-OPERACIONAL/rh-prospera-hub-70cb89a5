@@ -12,7 +12,11 @@ const bundle = await rolldown({
   platform: 'browser',
   resolve: {
     conditionNames: ['worker', 'browser', 'import', 'default'],
-    alias: { 'pdfjs-dist/legacy/build/pdf.mjs': path.join(root, 'cloudflare', 'stubs', 'pdfjs-stub.ts') },
+    alias: {
+      'pdfjs-dist/legacy/build/pdf.mjs': path.join(root, 'cloudflare', 'stubs', 'pdfjs-stub.ts'),
+      'pdfjs-dist/legacy/build/pdf.worker.min.mjs': path.join(root, 'cloudflare', 'stubs', 'pdfjs-stub.ts'),
+      '@napi-rs/canvas': path.join(root, 'cloudflare', 'stubs', 'pdfjs-stub.ts'),
+    },
   },
   external: [/^node:/],
   logLevel: 'warn',

@@ -35,4 +35,26 @@ describe('Cloudflare Pages worker', () => {
     });
     expect(res.status).toBe(413);
   });
+
+  const PORTED = [
+    'frota-upload', 'protocolos-parse', 'mechanic-face', 'payroll-admin', 'payroll-archive', 'payroll-face',
+    'payroll-physical-signature', 'payroll-public', 'pre-cadastro-candidato', 'pre-cadastro-convite',
+    'pre-cadastro-publico', 'accounting-portal-admin-view', 'accounting-vacation-documents', 'accounting-email-process',
+  ];
+  it.each(PORTED)('rota portada /api/%s executa no Worker, responde JSON e nunca 501/HTML sem credenciais', async (route) => {
+    const res = await call(`/api/${route}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
+    expect(res.status).not.toBe(501);
+    expect(res.status).toBeGreaterThanOrEqual(400); // sem sessão/credencial nunca pode dar 2xx
+    expect(res.headers.get('content-type')).toContain('application/json');
+    const body = await res.json();
+    expect(body.ok).toBe(false);
+  });
+
+  it('rotas que enviam e-mail permanecem fail-closed (501), sem envio real', async () => {
+    for (const route of ['send-email-pdf', 'accounting-access', 'portal-access', 'operator-code', 'user-email-settings', 'bootstrap-admin']) {
+      const res = await call(`/api/${route}`, { method: 'POST', body: '{}' });
+      expect(res.status).toBe(501);
+    }
+  });
 });
+
