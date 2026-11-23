@@ -128,7 +128,7 @@ export default function ContabilidadeDashboardPageV2({ portal }: { portal: Porta
 
   const sair = useCallback(async () => {
     const s = readSession(portal);
-    if (s?.token) await supabase.rpc('contabilidade_portal_logout' as any, { p_token: s.token, p_portal: portal }).catch(() => null);
+    if (s?.token) await Promise.resolve(supabase.rpc('contabilidade_portal_logout' as any, { p_token: s.token, p_portal: portal })).catch(() => null);
     localStorage.removeItem(storageKey(portal));
     navigate(accessPath(portal), { replace: true });
   }, [navigate, portal]);

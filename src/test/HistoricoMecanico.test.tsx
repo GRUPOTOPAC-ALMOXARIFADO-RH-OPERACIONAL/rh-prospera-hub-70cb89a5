@@ -45,9 +45,9 @@ describe('Histórico do App Mecânico', () => {
 
     render(<HistoricoPage />);
 
-    expect(await screen.findByText('ABC1D23 - Posto Teste')).toBeInTheDocument();
-    expect(screen.getByText(/Diesel S10 \| 29\.37 L \| R\$ 205\.30/)).toBeInTheDocument();
-    expect(screen.getByText(/KM 123456 \| TOPAC/)).toBeInTheDocument();
+    expect(await screen.findByText('ABC1D23 · Posto Teste')).toBeInTheDocument();
+    expect(screen.getByText(/Diesel S10 · 29\.37 L · R\$ 205\.30/)).toBeInTheDocument();
+    expect(screen.getByText(/KM 123456 · TOPAC/)).toBeInTheDocument();
     expect(rpc).toHaveBeenCalledWith('app_mecanico_listar_historico', { p_acesso_id: 'acesso-1' });
   });
 });

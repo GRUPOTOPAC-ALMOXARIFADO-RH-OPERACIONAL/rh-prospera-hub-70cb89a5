@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import ContabilidadeVacationDocuments from './ContabilidadeVacationDocuments';
 import ContabilidadeProcessReturn from './ContabilidadeProcessReturn';
 
 type PortalKind = 'principal' | 'goiania';
@@ -125,7 +126,7 @@ export default function ContabilidadeDashboardPageV3({ portal }: { portal: Porta
 
   const sair = useCallback(async () => {
     const s = readSession(portal);
-    if (s?.token) await supabase.rpc('contabilidade_portal_logout' as any, { p_token: s.token, p_portal: portal }).catch(() => null);
+    if (s?.token) await Promise.resolve(supabase.rpc('contabilidade_portal_logout' as any, { p_token: s.token, p_portal: portal })).catch(() => null);
     localStorage.removeItem(storageKey(portal));
     navigate(accessPath(portal), { replace: true });
   }, [navigate, portal]);
@@ -197,7 +198,17 @@ export default function ContabilidadeDashboardPageV3({ portal }: { portal: Porta
       toast.success(status === 'conferido' ? 'Conferência registrada.' : 'Pendência registrada para o RH.');
       setShowIssueForm(false);
       await carregar(true);
-      setSelecionado(null);
+      if (evento.origem_tipo === 'ferias' && status === 'conferido') {
+        setSelecionado({
+          ...evento,
+          status: 'conferido',
+          observacao: null,
+          revisor_nome: res.revisor_nome || sessao?.usuario?.nome || null,
+          revisado_em: res.revisado_em || new Date().toISOString(),
+        });
+      } else {
+        setSelecionado(null);
+      }
     } catch (err: any) {
       toast.error(err?.message || 'Erro ao salvar.');
     } finally {
@@ -441,6 +452,17 @@ export default function ContabilidadeDashboardPageV3({ portal }: { portal: Porta
               <div className="mt-4 grid gap-3 sm:grid-cols-2">{detailRows(selecionado).map(([label, value]) => <div key={label} className="rounded-md border border-[#24232a] bg-[#05070a] p-3"><div className="text-[9px] font-bold uppercase tracking-wide text-zinc-600">{label}</div><div className="mt-1 text-xs font-semibold text-zinc-200">{String(value ?? '—')}</div></div>)}</div>
             </div>
             {selecionado.documento_url && <Button variant="outline" onClick={() => abrirDocumento(selecionado)} className="border-[#3d3150] bg-[#090b10] text-zinc-200">Abrir documento</Button>}
+            {selecionado.origem_tipo === 'ferias' && <ContabilidadeVacationDocuments
+              portal={portal}
+              token={sessao?.token || ''}
+              confirmed={selecionado.status === 'conferido'}
+              evento={{
+                origem_id: selecionado.origem_id,
+                empresa_id: selecionado.empresa_id,
+                funcionario_nome: selecionado.funcionario_nome,
+                inicio: selecionado.detalhes?.inicio,
+              }}
+            />}
             {!isInformational(selecionado) && <div className="rounded-lg border border-[#302739] bg-[#080a0f] p-4">
               <div className="text-xs font-bold text-white">Conferência</div>
               {selecionado.observacao && <div className="mt-2 rounded-md border border-rose-500/20 bg-rose-500/[.04] p-3 text-xs text-rose-200">{selecionado.observacao}</div>}
